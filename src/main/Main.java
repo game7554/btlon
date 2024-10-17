@@ -21,4 +21,4 @@ public class Main {
         gamePanel.startGameThread();
     }
 }
-//code thu tiep
+//code thu tiep tiep
