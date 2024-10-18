@@ -18,8 +18,8 @@ import main.GamePanel;
 
 public class TileManager {
     GamePanel gp;
-    Tile[] tile;
-    int[][] mapTileNum;
+    public Tile[] tile;
+    public int[][] mapTileNum;
 
     public TileManager(GamePanel gp) {
         this.gp = gp;
@@ -35,14 +35,22 @@ public class TileManager {
         try {
             this.tile[0] = new Tile();
             this.tile[0].image = ImageIO.read(this.getClass().getResourceAsStream("/tiles/grass.png"));
+
             this.tile[1] = new Tile();
             this.tile[1].image = ImageIO.read(this.getClass().getResourceAsStream("/tiles/wall.png"));
+            this.tile[1].collision = true;
+
             this.tile[2] = new Tile();
             this.tile[2].image = ImageIO.read(this.getClass().getResourceAsStream("/tiles/water.png"));
+            this.tile[2].collision = true;
+
             this.tile[3] = new Tile();
             this.tile[3].image = ImageIO.read(this.getClass().getResourceAsStream("/tiles/earth.png"));
+
             this.tile[4] = new Tile();
             this.tile[4].image = ImageIO.read(this.getClass().getResourceAsStream("/tiles/tree.png"));
+            this.tile[4].collision = true;
+
             this.tile[5] = new Tile();
             this.tile[5].image = ImageIO.read(this.getClass().getResourceAsStream("/tiles/sand.png"));
         } catch (IOException var2) {
