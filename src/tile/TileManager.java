@@ -24,7 +24,7 @@ public class TileManager {
 
     public TileManager(GamePanel gp) {
         this.gp = gp;
-        this.tile = new Tile[10];
+        this.tile = new Tile[50];
         Objects.requireNonNull(gp);
         Objects.requireNonNull(gp);
         this.mapTileNum = new int[50][50];
@@ -39,7 +39,7 @@ public class TileManager {
             setup(3, "earth", false);
             setup(4, "tree", true);
             setup(5, "sand", false);
-
+            
     }
 
     public void setup(int index, String imageName, boolean collision){
