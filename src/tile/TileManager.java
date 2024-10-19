@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.util.Objects;
 import javax.imageio.ImageIO;
 import main.GamePanel;
+import main.UtilityTool;
 
 public class TileManager {
     GamePanel gp;
@@ -32,31 +33,27 @@ public class TileManager {
     }
 
     public void getTileImage() {
+            setup(0, "grass", false);
+            setup(1, "wall", true);
+            setup(2, "water", true);
+            setup(3, "earth", false);
+            setup(4, "tree", true);
+            setup(5, "sand", false);
+
+    }
+
+    public void setup(int index, String imageName, boolean collision){
+        UtilityTool uTool = new UtilityTool();
+
         try {
-            this.tile[0] = new Tile();
-            this.tile[0].image = ImageIO.read(this.getClass().getResourceAsStream("/tiles/grass.png"));
+            tile[index] = new Tile();
+            this.tile[index].image = ImageIO.read(this.getClass().getResourceAsStream("/tiles/" + imageName + ".png"));
+            tile[index].image= uTool.scaleImage(tile[index].image, gp.tileSize, gp.tileSize);
+            tile[index].collision = collision;
 
-            this.tile[1] = new Tile();
-            this.tile[1].image = ImageIO.read(this.getClass().getResourceAsStream("/tiles/wall.png"));
-            this.tile[1].collision = true;
-
-            this.tile[2] = new Tile();
-            this.tile[2].image = ImageIO.read(this.getClass().getResourceAsStream("/tiles/water.png"));
-            this.tile[2].collision = true;
-
-            this.tile[3] = new Tile();
-            this.tile[3].image = ImageIO.read(this.getClass().getResourceAsStream("/tiles/earth.png"));
-
-            this.tile[4] = new Tile();
-            this.tile[4].image = ImageIO.read(this.getClass().getResourceAsStream("/tiles/tree.png"));
-            this.tile[4].collision = true;
-
-            this.tile[5] = new Tile();
-            this.tile[5].image = ImageIO.read(this.getClass().getResourceAsStream("/tiles/sand.png"));
-        } catch (IOException var2) {
-            var2.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
     }
 
     public void loadMap(String filePath) {
@@ -136,7 +133,7 @@ public class TileManager {
                             BufferedImage var10001 = this.tile[tileNum].image;
                             Objects.requireNonNull(this.gp);
                             Objects.requireNonNull(this.gp);
-                            g2.drawImage(var10001, screenX, screenY, 48, 48, (ImageObserver)null);
+                            g2.drawImage(var10001, screenX, screenY, (ImageObserver)null);
                         }
                     }
                 }
