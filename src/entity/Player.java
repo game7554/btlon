@@ -78,6 +78,11 @@ public class Player extends Entity{
             // CHECK OBJECT COLLISION
             int objIndex = gp.cChecker.checkObject(this, true);
             pickUpObject(objIndex);
+
+            //CHECK NPC COLLISION
+            int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+            interfaceNPC(npcIndex);
+
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
             if(collisionOn == false) {
                 switch (direction) {
@@ -98,15 +103,22 @@ public class Player extends Entity{
                 }
                 spriteCounter = 0;
             }
-
-
         }
-
     }
     public void pickUpObject(int i) {
         if(i != 999) {
 
         }
+    }
+
+    public void interfaceNPC(int i){
+        if(i != 999) {
+            if (gp.keyH.enterPressed == true){
+                gp.gameState = gp.dialogueState;
+                gp.npc[i].speak();
+            }
+        }
+        gp.keyH.enterPressed = false;
     }
     public void draw(Graphics2D g2) {
         //g2.setColor(Color.white);
