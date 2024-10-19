@@ -14,7 +14,7 @@ public class NPC_OldMan extends Entity{
 
     public void getImage(){
         up1 = setup("/npc/oldman_up_1");
-        up2 = setup("/npc/oldman_b_up_2");
+        up2 = setup("/npc/oldman_up_2");
         down1 = setup("/npc/oldman_down_1");
         down2 = setup("/npc/oldman_down_2");
         left1 = setup("/npc/oldman_left_1");
