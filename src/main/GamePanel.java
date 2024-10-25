@@ -1,15 +1,16 @@
 package main;
 
-import entity.Entity;
-import entity.Player;
-import object.SuperObject;
-import tile.TileManager;
-
-import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import javax.swing.JPanel;
+import entity.Entity;
+import entity.Player;
+import tile. TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
     // SCREEN SETTINGS
@@ -40,8 +41,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     // ENTITY AND OBJECT
     public Player player = new Player(this, keyH);
-    public SuperObject obj[] = new SuperObject[10];
+    public Entity obj[] = new Entity[10];
     public Entity npc[] = new Entity[10];
+    public Entity monster[] = new Entity[20];
+    ArrayList<Entity> entityList = new ArrayList<>();
     // set player's  default position
 
     //GAME STATE
@@ -50,11 +53,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int playState = 1;
     public final int pauseState = 2;
     public final int dialogueState = 3;
-
-    int playerX = 100;
-    int playerY = 100;
-    int playerSpeed = 4;
-
+    public final  int characterState = 4;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -68,6 +67,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         aSetter.setObject();
         aSetter.setNPC();
+        aSetter.setMonster();
         playMusic(0);
         stopMusic();
         gameState = titleState;
@@ -115,6 +115,16 @@ public class GamePanel extends JPanel implements Runnable {
                     npc[i].update();
                 }
             }
+            for( int i = 0; i< monster.length; i++){
+                if (monster[i] != null){
+                    if(monster[i].alive == true && monster[i].dying == false){
+                        monster[i].update();
+                    }
+                    if(monster[i].alive == false){
+                        monster[i] = null;
+                    }
+                }
+            }
         }
         if (gameState == pauseState){
             //nothing
@@ -125,7 +135,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         super.paintComponent(g);
 
-        Graphics2D g2 = (Graphics2D) g;
+        Graphics2D g2 = (Graphics2D)g;
         // DEBUG
         long drawStart  = 0;
         if (keyH.checkDrawTime == true) {
@@ -133,29 +143,57 @@ public class GamePanel extends JPanel implements Runnable {
         }
         if(gameState==titleState) {
             ui.draw(g2);
-
-
-
         }
         else {
             // TILE
             tileM.draw(g2);
 
-            //OBJECT
-            for(int i = 0; i < obj.length; i++) {
-                if(obj[i] != null) {
-                    obj[i].draw(g2, this);
+            // ADD Entities TO THE LIST
+            entityList.add(player);
+            for(int i = 0; i < npc.length; i++){
+                if(npc[i] != null){
+                    entityList.add(npc[i]);
                 }
             }
-            //NPC
-            for (int i = 0; i < npc.length; i++){
-                if (npc[i] != null){
-                    npc[i].draw(g2);
+            for(int i = 0; i < obj.length; i++){
+                if(obj[i] != null){
+                    entityList.add(obj[i]);
+                }
+            }
+            for(int i = 0; i < monster.length; i++){
+                if(monster[i] != null){
+                    entityList.add(monster[i]);
                 }
             }
 
-            // PLAYER
-            player.draw(g2);
+            // SORT
+            Collections.sort(entityList, new Comparator<Entity>() {
+                @Override
+                public int compare(Entity e1, Entity e2) {
+                    // Kiểm tra nếu e1 hoặc e2 là null
+                    if (e1 == null && e2 == null) {
+                        return 0; // Nếu cả hai đều null, coi như bằng nhau
+                    }
+                    if (e1 == null) {
+                        return -1; // Nếu e1 là null, đặt e1 trước e2
+                    }
+                    if (e2 == null) {
+                        return 1; // Nếu e2 là null, đặt e2 trước e1
+                    }
+
+                    // So sánh dựa trên giá trị worldY
+                    return Integer.compare(e1.worldY, e2.worldY);
+                }
+            });
+
+            //DRAW ENTITIES
+            for(int i = 0; i < entityList.size(); i++ ){
+                entityList.get(i).draw(g2);
+            }
+            //EMPTY ENTITY LIST
+            entityList.clear();
+
+
 
             // UI
             ui.draw(g2);
