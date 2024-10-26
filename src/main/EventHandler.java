@@ -59,11 +59,13 @@ public class EventHandler {
     }
     public void healingPool(int col, int row, int gameState){
         if(gp.keyH.enterPressed==true){
-        gp.gameState=gameState;
-        gp.player.attackCanceled = true;
-        gp.ui.currentDialogue="Bạn dã uống nuơc nen duoc hoi mau.";
-        gp.player.life=gp.player.maxLife;
-        eventRect[col][row].eventDone=true;
+            gp.gameState=gameState;
+            gp.player.attackCanceled = true;
+            gp.ui.currentDialogue= "Ban da uong nuoc nen duoc hoi mau va \nmana.";
+            gp.player.life=gp.player.maxLife;
+            gp.player.mana = gp.player.maxMana;
+            eventRect[col][row].eventDone=true;
+            gp.aSetter.setMonster();
         }
     }
 }

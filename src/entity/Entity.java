@@ -43,14 +43,18 @@ public class Entity {
     public int spriteCounter = 0;
     public int actionLockCounter = 0;
     public int invincibleCounter = 0;
+    public int shotAvailableCounter = 0;
     int dyingCounter = 0;
     int hpBarCounter = 0;
+
     // CHARACTER ATTIBUTES
-    public int type; //0-player, 1 pc, 2 - monster
     public String name;
     public int speed;
     public int maxLife;
     public int life;
+    public int maxMana;
+    public int mana;
+    public int ammo;
     public int level;
     public int strength;
     public int dexterity;
@@ -61,9 +65,26 @@ public class Entity {
     public int coin;
     public Entity currentWeapon;
     public Entity currentShield;
+    public Projectile projectile;
+
     //Item Attributes
     public int attackValue;
     public int defenseValue;
+    public String description = "";
+    public int useCost;
+
+
+    //TYPE
+    public int type; //0 = player, 1 = npc, 2 = monster
+    public final int type_player = 0;
+    public final int type_npc = 1;
+    public final int type_monster = 2;
+    public final int type_sword = 3;
+    public final int type_axe = 4;
+    public final int type_shield = 5;
+    public final int type_consumable = 6;
+
+
 
     public Entity(GamePanel gp) {
         this.gp = gp;
@@ -96,6 +117,10 @@ public class Entity {
                 break;
         }
     }
+
+    public void use(Entity entity){
+
+    }
     public void update(){
         setAction();
 
@@ -107,13 +132,8 @@ public class Entity {
         boolean contactPlayer = gp.cChecker.checkPlayer(this);
 
 
-        if(this.type == 2 && contactPlayer == true){
-            if(gp.player.invincible == false){
-                // we can give damage
-                gp.playSE(6);
-                gp.player.life -= 1;
-                gp.player.invincible = true;
-            }
+        if(this.type == type_monster && contactPlayer == true){
+            damagePlayer(attack);
         }
         // IF COLLISION IS FALSE, PLAYER CAN MOVE
         if(collisionOn == false) {
@@ -142,6 +162,23 @@ public class Entity {
                 invincible = false;
                 invincibleCounter=0;
             }
+        }
+        if (shotAvailableCounter < 30){
+            shotAvailableCounter++;
+        }
+    }
+    public void damagePlayer(int attack){
+        if(gp.player.invincible == false){
+            // we can give damage
+            gp.playSE(6);
+
+            int damage = attack - gp.player.defense;
+            if (damage < 0){
+                damage = 0;
+            }
+            gp.player.life -= damage;
+
+            gp.player.invincible = true;
         }
     }
     public void draw(Graphics2D g2){
@@ -206,29 +243,27 @@ public class Entity {
             changAlpha(g2, 1F);
         }
     }
-   public void dyingAnimation(Graphics2D g2){
+    public void dyingAnimation(Graphics2D g2){
         dyingCounter++;
         int i= 5;
         if( dyingCounter <= 5 ){changAlpha(g2, 0f);}
-       if( dyingCounter >i && dyingCounter <= i*2){changAlpha(g2, 1f);}
-       if( dyingCounter >i*2 && dyingCounter <= i*3 ){changAlpha(g2, 0f);}
-       if( dyingCounter >i*3 && dyingCounter <= i*4){changAlpha(g2, 1f);}
-       if( dyingCounter >i*4 && dyingCounter <= i*5 ){changAlpha(g2, 0f);}
-       if( dyingCounter >i*5 && dyingCounter <= i*6){changAlpha(g2, 1f);}
-       if( dyingCounter >i*6 && dyingCounter <= i*7){changAlpha(g2, 0f);}
-       if( dyingCounter >i*7 && dyingCounter <= i*8){changAlpha(g2, 1f);}
-       if(dyingCounter>i*8){
-           dying =  false;
-           alive = false;
-       }
+        if( dyingCounter >i && dyingCounter <= i*2){changAlpha(g2, 1f);}
+        if( dyingCounter >i*2 && dyingCounter <= i*3 ){changAlpha(g2, 0f);}
+        if( dyingCounter >i*3 && dyingCounter <= i*4){changAlpha(g2, 1f);}
+        if( dyingCounter >i*4 && dyingCounter <= i*5 ){changAlpha(g2, 0f);}
+        if( dyingCounter >i*5 && dyingCounter <= i*6){changAlpha(g2, 1f);}
+        if( dyingCounter >i*6 && dyingCounter <= i*7){changAlpha(g2, 0f);}
+        if( dyingCounter >i*7 && dyingCounter <= i*8){changAlpha(g2, 1f);}
+        if(dyingCounter>i*8){
 
-   }
-   public void changAlpha(Graphics2D g2, float alphaValue){
-       g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaValue));
-   }
+            alive = false;
+        }
 
 
-
+    }
+    public void changAlpha(Graphics2D g2, float alphaValue){
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaValue));
+    }
     public BufferedImage setup(String imagePath, int width, int height){
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
