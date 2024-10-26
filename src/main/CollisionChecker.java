@@ -118,11 +118,10 @@ public class CollisionChecker {
                     case "right": entity.solidArea.x += entity.speed; break;
                 }
                 if (entity.solidArea.intersects(target[i].solidArea)) {
-                    if(target[i] != entity){
-                        entity.collisionOn = true;
-                        index = i;
-                    }
-
+                        if(target[i] != entity){
+                            entity.collisionOn = true;
+                            index = i;
+                        }
                 }
                 entity.solidArea.x = entity.solidAreaDefaultX;
                 entity.solidArea.y = entity.solidAreaDefaultY;

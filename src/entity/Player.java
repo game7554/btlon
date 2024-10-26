@@ -125,7 +125,7 @@ public class Player extends Entity{
             contactMonster(monsterIndex);
             //CHECH EVENT
             gp.eHandler.checkEvent();
-            gp.keyH.enterPressed = false;
+
 
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
             if(collisionOn == false && keyH.enterPressed == false) {
@@ -136,6 +136,7 @@ public class Player extends Entity{
                     case "right": worldX += speed; break;
                 }
             }
+           gp.keyH.enterPressed = false;
             if(keyH.enterPressed == true && attackCanceled == false ){
                 gp.playSE(6);
                 attacking = true;
@@ -177,7 +178,7 @@ public class Player extends Entity{
         if(spriteCounter <= 5 ){
             spriteNum =1;
         }
-        if(spriteCounter >5 && spriteNum <= 25){
+        if(spriteCounter >5 && spriteCounter <= 25){
             spriteNum =2;
             int currentWorldX = worldX;
             int currentWorldY = worldY;
@@ -220,15 +221,21 @@ public class Player extends Entity{
         }
     }
 
-    public void interactNPC(int i) {
-        if (gp.keyH.enterPressed == true) {
-            if (i != 999) {
-                attackCanceled = true;
-                gp.gameState = gp.dialogueState;
-                gp.npc[i].speak();
+    public void interactNPC(int i){
+        if(gp.keyH.enterPressed == true){
+            if(i != 999) {
+                if (gp.keyH.enterPressed == true){
+                    gp.gameState = gp.dialogueState;
+                    gp.npc[i].speak();
+                }
             }
-
+            else {
+                if(gp.keyH.enterPressed == true){
+                    attacking = true;
+                }
+            }
         }
+
     }
     public void contactMonster(int i){
         if( i != 999){
@@ -237,8 +244,6 @@ public class Player extends Entity{
                 life -= 1;
                 invincible = true;
             }
-
-
         }
     }
     public void damageMonster(int i){

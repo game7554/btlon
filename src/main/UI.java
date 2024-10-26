@@ -217,9 +217,9 @@ public class UI {
         g2.drawString("Next Level", textX, textY);
         textY += lineHeight;
         g2.drawString("Coin", textX, textY);
-        textY += lineHeight  ;
+        textY += lineHeight +20 ;
         g2.drawString("Weapon", textX, textY);
-        textY += lineHeight;
+        textY += lineHeight +15;
         g2.drawString("Shield", textX, textY);
         textY += lineHeight;
 
@@ -271,10 +271,11 @@ public class UI {
         value = String.valueOf(gp.player.coin   );
         textX=getXforAlignToRightText(value,tailX);
         g2.drawString(value, textX, textY);
+        textY +=lineHeight;
 
-        g2.drawImage(gp.player.currentWeapon.down1, tailX -gp.tileSize, textY, null);
+        g2.drawImage(gp.player.currentWeapon.down1, tailX -gp.tileSize, textY-14, null);
         textY += gp.tileSize;
-        g2.drawImage(gp.player.currentShield.down1, tailX - gp.tileSize, textY, null);
+        g2.drawImage(gp.player.currentShield.down1, tailX - gp.tileSize, textY-14, null);
     }
     public void drawSubWindow(int x, int y, int width, int height){
 
