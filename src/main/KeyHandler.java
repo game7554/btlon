@@ -52,12 +52,12 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_W) {
             gp.ui.commandNum--;
             if (gp.ui.commandNum < 0) {
-                gp.ui.commandNum = 2;
+                gp.ui.commandNum = 3;
             }
         }
         if (code == KeyEvent.VK_S) {
             gp.ui.commandNum++;
-            if (gp.ui.commandNum > 2) {
+            if (gp.ui.commandNum > 3) {
                 gp.ui.commandNum = 0;
             }
         }
@@ -70,6 +70,9 @@ public class KeyHandler implements KeyListener {
                 //ADD LATER
             }
             if (gp.ui.commandNum == 2) {
+                //ADD LATER
+            }
+            if (gp.ui.commandNum == 3) {
                 System.exit(0);
             }
         }
@@ -90,7 +93,7 @@ public class KeyHandler implements KeyListener {
         if( code == KeyEvent.VK_P){
             gp.gameState = gp.pauseState;
         }
-        if(code == KeyEvent.VK_C){
+        if(code == KeyEvent.VK_B){
             gp.gameState = gp.characterState;
         }
         if( code == KeyEvent.VK_ENTER){
@@ -125,7 +128,7 @@ public class KeyHandler implements KeyListener {
         }
     }
     public void characterState(int code){
-        if ( code == KeyEvent.VK_C){
+        if ( code == KeyEvent.VK_B){
             gp.gameState = gp.playState;
         }
         if (code == KeyEvent.VK_W){
