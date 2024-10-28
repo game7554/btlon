@@ -64,7 +64,8 @@ public class Player extends Entity{
         exp = 0;
         nextLevelExp = 5 ;
         coin = 0;
-        currentWeapon = new OBJ_Sword_Normal(gp);
+//        currentWeapon = new OBJ_Sword_Normal(gp);
+        currentWeapon = new OBJ_Axe(gp);
         currentShield = new OBJ_Shield_Wood(gp);
         projectile = new OBJ_Fireball(gp);
         //projectile = new OBJ_Rock(gp);
@@ -152,7 +153,11 @@ public class Player extends Entity{
             //CHECK MONSTER COLLISION
             int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
             contactMonster(monsterIndex);
-            //CHECH EVENT
+
+            // CHECK INTERACTIVE TILE COLLISION
+            int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
+
+            //CHECK EVENT
             gp.eHandler.checkEvent();
 
 
@@ -221,6 +226,12 @@ public class Player extends Entity{
         if (shotAvailableCounter < 30){
             shotAvailableCounter++;
         }
+        if(life > maxLife) {
+            life = maxLife;
+        }
+        if(mana > maxMana) {
+            mana = maxMana;
+        }
     }
     public void attacking(){
         spriteCounter++;
@@ -246,6 +257,10 @@ public class Player extends Entity{
           // Check monster collision with the updated worldX, worldy and solidArea
             int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
             damageMonster (monsterIndex, attack);
+
+            int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
+            damageInteractiveTile(iTileIndex);
+
          // After checking collision, resotre the original data
             worldX = currentWorldX;
             worldY = currentWorldY;
@@ -262,17 +277,26 @@ public class Player extends Entity{
     }
     public void pickUpObject(int i) {
         if (i != 999) {
-            String text;
-            if (inventory.size() != maxInventorySize){
-                inventory.add(gp.obj[i]);
-                gp.playSE(1);
-                text = "Got a " + gp.obj[i].name + "!";
+            // PICKUP ONLY ITEMS
+            if(gp.obj[i].type == type_pickupOnly) {
+                gp.obj[i].use(this);
+                gp.obj[i] = null;
             }
-            else{
-                text = "You cannot carry any more!";
+
+            //INVENTORY ITEMS
+            else {
+                String text;
+                if (inventory.size() != maxInventorySize){
+                    inventory.add(gp.obj[i]);
+                    gp.playSE(1);
+                    text = "Got a " + gp.obj[i].name + "!";
+                }
+                else{
+                    text = "You cannot carry any more!";
+                }
+                gp.ui.addMessage(text);
+                gp.obj[i] = null;
             }
-            gp.ui.addMessage(text);
-            gp.obj[i] = null;
         }
     }
     public void interactNPC(int i){
@@ -328,6 +352,21 @@ public class Player extends Entity{
                     }
                 }
             }
+    }
+    public void damageInteractiveTile(int i) {
+        if(i != 999 && gp.iTile[i].destructible == true
+                && gp.iTile[i].isCorrectItem(this) == true && gp.iTile[i].invincible == false) {
+            gp.iTile[i].playSE();
+            gp.iTile[i].life--;
+            gp.iTile[i].invincible = true;
+
+            // Generate Particle
+            generateParticle(gp.iTile[i], gp.iTile[i]);
+
+            if(gp.iTile[i].life == 0) {
+                gp.iTile[i] = gp.iTile[i].getDestroyedForm();
+            }
+        }
     }
     public void checkLevelUp(){
         if (exp >= nextLevelExp){
