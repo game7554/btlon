@@ -47,6 +47,9 @@ public class KeyHandler implements KeyListener {
         else if ( gp.gameState == gp.optionsState){
             optionsState(code);
         }
+        else if(gp.gameState==gp.gameOverState){
+            gameOverState(code);
+        }
     }
     public void tileState(int code){
         if (code == KeyEvent.VK_W) {
@@ -114,6 +117,13 @@ public class KeyHandler implements KeyListener {
             }
             else if (checkDrawTime == true){
                 checkDrawTime = false;
+            }
+        }
+        if(code == KeyEvent.VK_R)
+        {
+            switch(gp.currentMap){
+                case 0: gp.tileM.loadMap("/maps/worldV3.txt",0);
+                case 1: gp.tileM.loadMap("maps/interior01.txt",1);
             }
         }
     }
@@ -213,6 +223,30 @@ public class KeyHandler implements KeyListener {
                     gp.playSE(9);
                 }
             }
+        }
+    }
+    public void gameOverState(int code)
+    {
+        if(code==KeyEvent.VK_W)
+        {
+            gp.ui.commandNum--;
+            if(gp.ui.commandNum<0) gp.ui.commandNum=1;
+            gp.playSE(9);
+        }
+        if(code==KeyEvent.VK_S)
+        {
+            gp.ui.commandNum++;
+            if(gp.ui.commandNum>1) gp.ui.commandNum=0;
+            gp.playSE(9);
+        }
+        if(code==KeyEvent.VK_ENTER)
+        {
+            if(gp.ui.commandNum==0) {
+                gp.gameState=gp.playState;
+                gp.retry();
+            }
+            else {gp.gameState=gp.titleState;
+                gp.restart();}
         }
     }
     @Override

@@ -29,5 +29,7 @@ public class Main {
         gamePanel.setupGame();
         gamePanel.startGameThread();
     }
+
+
 }
 //code thu tiep tiep
