@@ -1,5 +1,7 @@
 package main;
 
+import entity.Entity;
+
 import java.awt.*;
 
 public class EventHandler {
@@ -9,6 +11,7 @@ public class EventHandler {
     //int eventRectDefaultX,eventRectDefaultY;
     int previousEventX, previousEventY;
     boolean canTouchEvent = true;
+    int tempMap, tempCol, tempRow;
     public EventHandler(GamePanel gp)
     {
         this.gp=gp;
@@ -42,9 +45,8 @@ public class EventHandler {
         if(distance>gp.tileSize) canTouchEvent=true;
         if(canTouchEvent==true){
         if(hit(0,10,39,"any")==true) teleport(1,12,13);
-        else if(hit(1,12,13,"any")==true) teleport(0,10,40);}
-        //if(hit(0,27,16,"right")==true) damagePit(0,27,16,gp.dialogueState);
-        //if(hit(0,23,12,"up")==true) healingPool(0,23,12,gp.dialogueState);
+        else if(hit(1,12,13,"any")==true) teleport(0,10,40);
+        else if(hit(1,12,9,"up")==true) {speak(gp.npc[1][0]);}}
     }
     public boolean hit(int map, int col, int row, String reqDirection)
     {
@@ -84,12 +86,24 @@ public class EventHandler {
     }
     public void teleport(int map, int col, int row)
     {
-        gp.currentMap=map;
-        gp.player.worldX=gp.tileSize * col;
-        gp.player.worldY=gp.tileSize * row;
-        canTouchEvent = false;
-        previousEventX=gp.player.worldX;
-        previousEventY=gp.player.worldY;
-    }
+        gp.gameState = gp.transitionState;
+        tempMap = map;
+        tempCol = col;
+        tempRow = row;
 
+        //gp.currentMap=map;
+        //gp.player.worldX=gp.tileSize * col;
+        //gp.player.worldY=gp.tileSize * row;
+        canTouchEvent = false;
+        //previousEventX=gp.player.worldX;
+        //previousEventY=gp.player.worldY;
+    }
+    public void speak(Entity entity)
+    {
+        if(gp.keyH.enterPressed==true){
+            gp.gameState=gp.dialogueState;
+            gp.player.attackCanceled=true;
+            entity.speak();
+        }
+    }
 }

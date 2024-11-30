@@ -16,6 +16,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Entity {
     GamePanel gp;
@@ -68,6 +69,8 @@ public class Entity {
     public Projectile projectile;
 
     //Item Attributes
+    public ArrayList<Entity> inventory = new ArrayList<>();
+    public final int maxInventorySize = 20;
     public int value;
     public int attackValue;
     public int defenseValue;
@@ -189,7 +192,7 @@ public class Entity {
         }
 
         spriteCounter++;
-        if(spriteCounter>10){
+        if(spriteCounter>25){
             if(spriteNum == 1){
                 spriteNum = 2;
             }
