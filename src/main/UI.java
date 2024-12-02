@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 
 import entity.Entity;
+import object.OBJ_Coin_Bronze;
 import object.OBJ_Heart;
 import object.OBJ_ManaCrystal;
 
@@ -19,7 +20,7 @@ public class UI {
     GamePanel gp;
     Graphics2D g2;
     Font arial_40, arial_80B;
-    BufferedImage heart_full, heart_half, heart_blank, crystal_full, crystal_blank;
+    BufferedImage heart_full, heart_half, heart_blank, crystal_full, crystal_blank, coin;
     public boolean messageOn = false;
 //    public String message = "";
 //    int messageCounter = 0;
@@ -50,6 +51,8 @@ public class UI {
         Entity crystal = new OBJ_ManaCrystal(gp);
         crystal_full = crystal.image;
         crystal_blank = crystal.image2;
+        Entity bronzecoin= new OBJ_Coin_Bronze(gp);
+        coin= bronzecoin.down1;
 
     }
     public void addMessage(String text) {
@@ -717,7 +720,7 @@ public class UI {
         int x= gp.tileSize*15;
         int y= gp.tileSize*4;
         int width= gp.tileSize*3;
-        int height= gp.tileSize*4;
+        int height=gp.tileSize*4;
         drawSubWindow(x,y,width,height);
 
         //DRAW TEXTS
@@ -748,8 +751,108 @@ public class UI {
         drawInventory(gp.player,false);
         drawInventory(npc,true);
 
+        //DRAW HINT WINDOW
+        int x= gp.tileSize*2;
+        int y= gp.tileSize*9;
+        int width= gp.tileSize*6;
+        int height= gp.tileSize*2;
+        drawSubWindow(x,y,width,height);
+        g2.drawString("[ESC] Tro lai", x+24, y+60);
+
+        //DRAW COIN
+         x= gp.tileSize*12;
+         y= gp.tileSize*9;
+         width= gp.tileSize*6;
+         height= gp.tileSize*2;
+        drawSubWindow(x,y,width,height);
+        g2.drawString("Xu cua ban: "+gp.player.coin, x+24, y+60);
+
+        //DRAW PRICE
+        int itemIndex=getItemIndexOnSlot(npcslotCol,npcslotRow);
+        if(itemIndex<npc.inventory.size()) {
+            x = (int) (gp.tileSize * 5.5);
+            y = (int) (gp.tileSize * 5.5);
+            width = (int) (gp.tileSize * 2.5);
+            height = gp.tileSize;
+            drawSubWindow(x, y, width, height);
+            g2.drawImage(coin, x + 10, y + 8, 32, 32, null);
+
+            int price = npc.inventory.get(itemIndex).price;
+            String text = "" + price;
+            x = getXforAlignToRightText(text, gp.tileSize * 8 - 20);
+            g2.drawString(text, x, y + 34);
+
+            //BUY AN ITEM
+            if (gp.keyH.enterPressed == true) {
+                if (npc.inventory.get(itemIndex).price > gp.player.coin) {
+                    subState = 0;
+                    gp.gameState = gp.dialogueState;
+                    currentDialogue = "Ban can nhieu xu hon";
+                    drawDialogueScreen();
+                }
+                else if (gp.player.inventory.size() == gp.player.maxInventorySize) {
+                    subState = 0;
+                    gp.gameState = gp.dialogueState;
+                    currentDialogue = "Ban khong the mang them";
+                }
+                else {
+                    gp.player.coin-=price;
+                    gp.player.inventory.add(npc.inventory.get(itemIndex));
+                }
+            }
+        }
     }
-    public void trade_sell(){}
+    public void trade_sell(){
+
+        drawInventory(gp.player,true);
+
+        int x= gp.tileSize*2;
+        int y= gp.tileSize*9;
+        int width= gp.tileSize*6;
+        int height= gp.tileSize*2;
+        drawSubWindow(x,y,width,height);
+        g2.drawString("[ESC] Tro lai", x+24, y+60);
+
+        //DRAW COIN
+        x= gp.tileSize*12;
+        y= gp.tileSize*9;
+        width= gp.tileSize*6;
+        height= gp.tileSize*2;
+        drawSubWindow(x,y,width,height);
+        g2.drawString("Xu cua ban: "+gp.player.coin, x+24, y+60);
+
+        //DRAW PRICE
+        int itemIndex=getItemIndexOnSlot(playerslotCol,playerslotRow);
+        if(itemIndex<gp.player.inventory.size()) {
+            x = (int) (gp.tileSize * 15.5);
+            y = (int) (gp.tileSize * 5.5);
+            width = (int) (gp.tileSize * 2.5);
+            height = gp.tileSize;
+            drawSubWindow(x, y, width, height);
+            g2.drawImage(coin, x + 10, y + 8, 32, 32, null);
+
+            int price = gp.player.inventory.get(itemIndex).price;
+            String text = "" + price;
+            x = getXforAlignToRightText(text, gp.tileSize * 18 - 20);
+            g2.drawString(text, x, y + 34);
+
+            //SELL AN ITEM
+            if (gp.keyH.enterPressed == true) {
+               if(gp.player.inventory.get(itemIndex)==gp.player.currentWeapon||
+                       gp.player.inventory.get(itemIndex)==gp.player.currentShield){
+                   commandNum=0;
+                   //subState=0;
+                   gp.gameState=gp.dialogueState;
+                   currentDialogue="Ban khong the ban do dang duoc trang bi";
+               }
+               else {
+                   gp.player.inventory.remove(itemIndex);
+                   gp.player.coin+=price;
+               }
+        }
+    }
+    }
+
     public int getItemIndexOnSlot(int slotCol, int slotRow){
         int itemIndex = slotCol + (slotRow* 5);
         return itemIndex;
