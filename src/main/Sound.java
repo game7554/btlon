@@ -6,7 +6,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import java.net.URL;
 
-public class Sound {
+public class    Sound {
     Clip clip;
     URL soundURL[] = new URL[30];
     FloatControl fc;
@@ -26,6 +26,7 @@ public class Sound {
         soundURL[9] = getClass().getResource("/sound/cursor.wav");
         soundURL[10] = getClass().getResource("/sound/burning.wav");
         soundURL[11] = getClass().getResource("/sound/cuttree.wav");
+        soundURL[14] = getClass().getResource("/sound/sleep.wav");
     }
 
     public void setFile(int i) {

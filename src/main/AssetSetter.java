@@ -3,6 +3,7 @@ package main;
 import entity.NPC_Merchant;
 import                                                                       entity.NPC_OldMan;
 import monster.MON_GreenSlime;
+import monster.MON_Orc;
 import object.*;
 import tile_interactive.IT_DryTree;
 
@@ -33,6 +34,10 @@ public class AssetSetter {
         gp.obj[mapNum][i] = new OBJ_Lantern(gp);
         gp.obj[mapNum][i].worldX = gp.tileSize*23;
         gp.obj[mapNum][i].worldY = gp.tileSize*20;
+        i++;
+        gp.obj[mapNum][i] = new OBJ_Tent(gp);
+        gp.obj[mapNum][i].worldX = gp.tileSize*19;
+        gp.obj[mapNum][i].worldY = gp.tileSize*22;
         i++;
         gp.obj[mapNum][i] = new OBJ_Shield_Blue(gp);
         gp.obj[mapNum][i].worldX = gp.tileSize*35;
@@ -112,6 +117,10 @@ public class AssetSetter {
         gp.monster[mapNum][i] = new MON_GreenSlime(gp);
         gp.monster[mapNum][i].worldX =gp.tileSize*38;
         gp.monster[mapNum][i].worldY = gp.tileSize *42;
+        i++;
+        gp.monster[mapNum][i] = new MON_Orc(gp);
+        gp.monster[mapNum][i].worldX =gp.tileSize*13;
+        gp.monster[mapNum][i].worldY = gp.tileSize *33;
         i++;
         mapNum=1;
     }

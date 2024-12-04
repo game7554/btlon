@@ -17,6 +17,7 @@ import object.OBJ_Heart;
 import object.OBJ_ManaCrystal;
 
 public class UI {
+    public Font arial;
     GamePanel gp;
     Graphics2D g2;
     Font arial_40, arial_80B;
@@ -102,9 +103,15 @@ public class UI {
             drawTransition();
         }
         //TRADE STATE
-        if(gp.gameState == gp.tradeState)
+        if(gp.gameState == gp.tradeState) {
             drawTradeScreen();
+        }
+        //SlEEP STATE
+        if(gp.gameState == gp.sleepState) {
+            drawSleepScreen();
+        }
     }
+
 
     public void drawMessage(){
         int messageX = gp.tileSize;
@@ -877,6 +884,26 @@ public class UI {
         }
     }
     }
+   public  void drawSleepScreen(){
+        counter++;
+       if (counter < 120) {
+           gp.eManager.lighting.filterAlpha += 0.01f;
+           if (gp.eManager.lighting.filterAlpha > 1f) {
+               gp.eManager.lighting.filterAlpha = 1f;
+           }
+       }
+               if (counter >= 120) {
+                       gp.eManager.lighting.filterAlpha -= 0.01f;
+               if (gp.eManager.lighting.filterAlpha <= 0f) {
+                   gp.eManager.lighting.filterAlpha = 0f;
+                   counter = 0;
+                   gp.eManager.lighting.dayState = gp.eManager.lighting.day;
+                   gp.eManager.lighting.dayCounter = 0;
+                   gp.gameState = gp.playState;
+                   gp.player.getPlayerImage();
+                    }
+               }
+   }
 
     public int getItemIndexOnSlot(int slotCol, int slotRow){
         int itemIndex = slotCol + (slotRow* 5);

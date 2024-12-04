@@ -94,6 +94,8 @@ public class Player extends Entity{
     }
     public int getAttack(){
         attackArea = currentWeapon.attackArea;
+        motion1_duration = currentWeapon.motion1_duration;
+        motion2_duration = currentWeapon.motion2_duration;
         return attack = strength * currentWeapon.attackValue;
     }
     public int getDenfense(){
@@ -109,6 +111,16 @@ public class Player extends Entity{
         right1 = setup("/player/boy_right_1",gp.tileSize, gp.tileSize);
         right2 = setup("/player/boy_right_2",gp.tileSize, gp.tileSize);
         logo = setup("/tiles/logo",gp.tileSize, gp.tileSize);
+    }
+    public void getSleepingImage(BufferedImage image)  {
+        up1 = image;
+        up2 = image;
+        down1 = image;
+        down2 = image;
+        left1 = image;
+        left2 = image;
+        right1 = image;
+        right2 = image;
     }
     public void getPlayerAttackImage() {
         if (currentWeapon.type == type_sword){
@@ -258,51 +270,7 @@ public class Player extends Entity{
             gp.gameState=gp.gameOverState;
         }
     }
-    public void attacking(){
-        spriteCounter++;
-        if(spriteCounter <= 5 ){
-            spriteNum =1;
-        }
-        if(spriteCounter >5 && spriteCounter <= 25){
-            spriteNum =2;
-            int currentWorldX = worldX;
-            int currentWorldY = worldY;
-            int solidAreaWidth = solidArea.width;
-            int solidAreaHeight = solidArea.height;
-          // Adjust player's worldX/Y for the attackArea
-            switch(direction) {
-                case "up": worldY -= attackArea.height; break;
-                case "down": worldY += attackArea.height; break;
-                case "left": worldX -= attackArea.width; break;
-                case "right": worldX += attackArea.width; break;
-            }
-           // attackArea becomes solidArea
-            solidArea.width = attackArea.width;
-            solidArea.height = attackArea.height;
-          // Check monster collision with the updated worldX, worldy and solidArea
-            int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
-            damageMonster (monsterIndex, attack, currentWeapon.knockBackPower);
 
-            int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
-            damageInteractiveTile(iTileIndex);
-
-            int projectileIndex = gp.cChecker.checkEntity(this, gp.projectile);
-            damageProjectile(projectileIndex);
-
-         // After checking collision, resotre the original data
-            worldX = currentWorldX;
-            worldY = currentWorldY;
-            solidArea.width = solidAreaWidth;
-            solidArea.height = solidAreaHeight;
-
-
-        }
-        if(spriteCounter >25){
-            spriteNum =1;
-            spriteCounter =0;
-            attacking = false;
-        }
-    }
     public void pickUpObject(int i) {
         if (i != 999) {
             // PICKUP ONLY ITEMS
@@ -362,13 +330,13 @@ public class Player extends Entity{
             }
         }
     }
-    public void damageMonster(int i, int attack, int knockBackPower){
+    public void damageMonster(int i,Entity attacker, int attack, int knockBackPower){
             if(i != 999 ){
                 if(gp.monster[gp.currentMap][i].invincible == false){
                     gp.playSE(5);
 
                     if(knockBackPower > 0) {
-                        knockBack(gp.monster[gp.currentMap][i], knockBackPower);
+                        setknockBack(gp.monster[gp.currentMap][i],attacker, knockBackPower);
                     }
 
 
@@ -392,11 +360,7 @@ public class Player extends Entity{
                 }
             }
     }
-    public void knockBack(Entity entity, int knockBackPower) {
-        entity.direction = direction;
-        entity.speed += knockBackPower;
-        entity.knockBack = true;
-    }
+
     public void damageInteractiveTile(int i) {
         if(i != 999 && gp.iTile[gp.currentMap][i].destructible == true
                 && gp.iTile[gp.currentMap][i].isCorrectItem(this) == true && gp.iTile[gp.currentMap][i].invincible == false) {
