@@ -390,11 +390,30 @@ public class UI {
 
             //EQUIP CURSOR
             if (entity.inventory.get(i) == entity.currentWeapon ||
-                    entity.inventory.get(i) == entity.currentShield) {
+                    entity.inventory.get(i) == entity.currentShield ||
+                    entity.inventory.get(i) == entity.currentLight) {
                 g2.setColor(new Color(240, 190, 90));
                 g2.fillRoundRect(slotX, slotY, gp.tileSize, gp.tileSize, 10, 10);
             }
             g2.drawImage(entity.inventory.get(i).down1, slotX, slotY, null);
+
+            // DISPLAY AMOUNT
+            if(entity == gp.player && entity.inventory.get(i).amount > 1) {
+                g2.setFont(g2.getFont().deriveFont(32f));
+                int amountX;
+                int amountY;
+
+                String s = "" + entity.inventory.get(i).amount;
+                amountX = getXforAlignToRightText(s, slotX + 44);
+                amountY = slotY + gp.tileSize;
+
+                // SHADOW
+                g2.setColor(new Color(60, 60, 60));
+                g2.drawString(s, amountX, amountY);
+                // NUMBER
+                g2.setColor(Color.white);
+                g2.drawString(s, amountX - 3, amountY - 3);
+            }
 
             slotX += slotSize;
 
@@ -790,14 +809,15 @@ public class UI {
                     currentDialogue = "Ban can nhieu xu hon";
                     drawDialogueScreen();
                 }
-                else if (gp.player.inventory.size() == gp.player.maxInventorySize) {
-                    subState = 0;
-                    gp.gameState = gp.dialogueState;
-                    currentDialogue = "Ban khong the mang them";
-                }
                 else {
-                    gp.player.coin-=price;
-                    gp.player.inventory.add(npc.inventory.get(itemIndex));
+                    if(gp.player.canObtainItem(npc.inventory.get(itemIndex)) == true) {
+                        gp.player.coin-=price;
+                    }
+                    else {
+                        subState = 0;
+                        gp.gameState = gp.dialogueState;
+                        currentDialogue = "Ban khong the mang them";
+                    }
                 }
             }
         }
@@ -846,7 +866,12 @@ public class UI {
                    currentDialogue="Ban khong the ban do dang duoc trang bi";
                }
                else {
-                   gp.player.inventory.remove(itemIndex);
+                   if(gp.player.inventory.get(itemIndex).amount > 1) {
+                       gp.player.inventory.get(itemIndex).amount--;
+                   }
+                   else {
+                       gp.player.inventory.remove(itemIndex);
+                   }
                    gp.player.coin+=price;
                }
         }

@@ -8,6 +8,7 @@ import java.util.Comparator;
 import javax.swing.JPanel;
 import entity.Entity;
 import entity.Player;
+import environment.EnvironmentManager;
 import tile. TileManager;
 import tile_interactive.InteractiveTile;
 
@@ -46,6 +47,7 @@ public class GamePanel extends JPanel implements Runnable {
     public UI ui = new UI(this);
     public EventHandler eHandler=new EventHandler(this);
     Config config=new Config(this);
+    EnvironmentManager eManager = new EnvironmentManager(this);
     Thread gameThread;
 
     // ENTITY AND OBJECT
@@ -54,6 +56,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Entity npc[][] = new Entity[maxMap][20];
     public Entity monster[][] = new Entity[maxMap][20];
     public InteractiveTile iTile[][] = new InteractiveTile[maxMap][50];
+    public Entity projectile[][] = new Entity[maxMap][20];
     public ArrayList<Entity> projectileList = new ArrayList<>();
     public ArrayList<Entity> particleList = new ArrayList<>();
     ArrayList<Entity> entityList = new ArrayList<>();
@@ -85,6 +88,7 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setNPC();
         aSetter.setMonster();
         aSetter.setInteractiveTile();
+        eManager.setup();
         playMusic(0);
         stopMusic();
         gameState = titleState;
@@ -177,13 +181,13 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                 }
             }
-            for( int i = 0; i< projectileList.size(); i++){
-                if (projectileList.get(i) != null){
-                    if(projectileList.get(i).alive == true){
-                        projectileList.get(i).update();
+            for( int i = 0; i< projectile[1].length; i++){
+                if (projectile[currentMap][i] != null){
+                    if(projectile[currentMap][i].alive == true){
+                        projectile[currentMap][i].update();
                     }
-                    if(projectileList.get(i).alive == false){
-                        projectileList.remove(i);
+                    if(projectile[currentMap][i].alive == false){
+                        projectile[currentMap][i] = null;
                     }
                 }
             }
@@ -202,6 +206,7 @@ public class GamePanel extends JPanel implements Runnable {
                     iTile[currentMap][i].update();
                 }
             }
+            eManager.update();
         }
         if (gameState == pauseState){
             //nothing
@@ -245,9 +250,9 @@ public class GamePanel extends JPanel implements Runnable {
                     entityList.add(monster[currentMap][i]);
                 }
             }
-            for(int i = 0; i < projectileList.size(); i++){
-                if(projectileList.get(i) != null){
-                    entityList.add(projectileList.get(i));
+            for(int i = 0; i < projectile[1].length; i++){
+                if(projectile[currentMap][i] != null){
+                    entityList.add(projectile[currentMap][i]);
                 }
             }
             for(int i = 0; i < particleList.size(); i++){
@@ -283,7 +288,8 @@ public class GamePanel extends JPanel implements Runnable {
             //EMPTY ENTITY LIST
             entityList.clear();
 
-
+            // ENVIRONMENT
+            eManager.draw(g2);
 
             // UI
             ui.draw(g2);
