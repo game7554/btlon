@@ -110,7 +110,7 @@ public class Player extends Entity{
         left2 = setup("/player/boy_left_2",gp.tileSize, gp.tileSize);
         right1 = setup("/player/boy_right_1",gp.tileSize, gp.tileSize);
         right2 = setup("/player/boy_right_2",gp.tileSize, gp.tileSize);
-        logo = setup("/tiles/logo",gp.tileSize, gp.tileSize);
+        BufferedImage logo = setup("/tiles/logo", gp.tileSize, gp.tileSize);
     }
     public void getSleepingImage(BufferedImage image)  {
         up1 = image;
@@ -335,10 +335,10 @@ public class Player extends Entity{
                 if(gp.monster[gp.currentMap][i].invincible == false){
                     gp.playSE(5);
 
-                    if(knockBackPower > 0) {
-                        setknockBack(gp.monster[gp.currentMap][i],attacker, knockBackPower);
+                    if(knockBackPower > 0)
+                    {
+                        setKnockBack(gp.monster[gp.currentMap][i], attacker, knockBackPower);
                     }
-
 
                     int damage = attack - gp.monster[gp.currentMap][i].defense;
                     if (damage < 0){
