@@ -4,14 +4,18 @@ import entity.Entity;
 import main.GamePanel;
 
 public class OBJ_Lantern extends Entity {
-    public OBJ_Lantern(GamePanel gp) {
+
+    public static final String objName = "Lantern";
+
+    public OBJ_Lantern(GamePanel gp)
+    {
         super(gp);
 
         type = type_light;
-        name = "lantern";
-        down1 = setup("/objects/lantern", gp.tileSize, gp.tileSize);
+        name = objName;
+        down1 = setup("/objects/lantern",gp.tileSize,gp.tileSize);
         description = "[Lantern]\nIlluminates your \nsurroundings.";
         price = 200;
-        lightRadius = 250;
+        lightRadius = 350;
     }
 }

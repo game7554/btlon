@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +20,7 @@ public class UI {
     GamePanel gp;
     Graphics2D g2;
     Font arial_40, arial_80B;
+    public Font maruMonica, purisaB;
     BufferedImage heart_full, heart_half, heart_blank, crystal_full, crystal_blank, coin;
     public boolean messageOn = false;
 //    public String message = "";
@@ -31,30 +31,48 @@ public class UI {
     public String currentDialogue = "";
     public int commandNum=0;
     public int titleScreenState=0;
-    public int playerslotCol = 0;
-    public int playerslotRow = 0;
-    public int npcslotCol=0;
-    public int npcslotRow=0;
+    //Player Inventory
+    public int playerSlotCol = 0;
+    public int playerSlotRow = 0;
+    //Merchant NPC Inventory
+    public int npcSlotCol = 0;
+    public int npcSlotRow = 0;
     int subState = 0;
     int counter=0;
     public Entity npc;
+    int charIndex = 0;
+    String combinedText = "";
 
-    public UI(GamePanel gp) {
+
+    public UI(GamePanel gp)
+    {
         this.gp = gp;
-        arial_40 = new Font("Arial", Font.PLAIN, 40);
-        arial_80B = new Font("Arial", Font.BOLD, 80);
+        try
+        {
+           // arial_40 = new Font("Arial", Font.PLAIN, 40);
+           // arial_80B = new Font("Arial", Font.BOLD, 80);
+            InputStream is = getClass().getResourceAsStream("/font/x12y16pxMaruMonica.ttf");
+            maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);
+            is = getClass().getResourceAsStream("/font/Purisa Bold.ttf");
+            purisaB = Font.createFont(Font.TRUETYPE_FONT, is);
+        }
+        catch (FontFormatException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        //CREATE HUB OBJECT
-        Entity heart= new OBJ_Heart(gp);
-        heart_full=heart.image;
-        heart_half=heart.image2;
-        heart_blank=heart.image3;
+        //CREATE HUD OBJECT
+        Entity heart = new OBJ_Heart(gp);
+        heart_full = heart.image;
+        heart_half = heart.image2;
+        heart_blank = heart.image3;
         Entity crystal = new OBJ_ManaCrystal(gp);
         crystal_full = crystal.image;
         crystal_blank = crystal.image2;
-        Entity bronzecoin= new OBJ_Coin_Bronze(gp);
-        coin= bronzecoin.down1;
-
+        Entity bronzeCoin = new OBJ_Coin_Bronze(gp);
+        coin = bronzeCoin.down1;
     }
     public void addMessage(String text) {
 
@@ -116,7 +134,7 @@ public class UI {
     public void drawMessage(){
         int messageX = gp.tileSize;
         int messageY = gp.tileSize*4;
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD,24F));
         for (int i = 0; i < message.size(); i++){
             if (message.get(i) != null){
 
@@ -146,7 +164,7 @@ public class UI {
         //LOGO HUST
         //g2.drawImage(gp.player.logo, 0, 0, gp.tileSize*12,gp.tileSize*7,null);
         //TITLE NAME
-        g2.setFont(g2.getFont().deriveFont(Font.HANGING_BASELINE,96F));
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
         String text= "7554";
         int x= getXforCenteredText(text);
         int y= gp.tileSize*2;
@@ -235,20 +253,63 @@ public class UI {
 
         g2.drawString(text, x, y);
     }
-    public void drawDialogueScreen(){
+    public void drawDialogueScreen()
+    {
+        // WINDOW
+        int x = gp.tileSize * 3;
+        int y = gp.tileSize / 2;
+        int width = gp.screenWidth - (gp.tileSize * 6);
+        int height = gp.tileSize * 4;
 
-        //WINDOW
-        int x = gp.tileSize*3;
-        int y = gp.tileSize/2;
-        int width = gp.screenWidth - (gp.tileSize*6);
-        int height = gp.tileSize*4;
-        drawSubWindow(x, y, width, height);
+        drawSubWindow(x,y,width,height);
 
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 28F));
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,28F));
         x += gp.tileSize;
         y += gp.tileSize;
-        for (String line : currentDialogue.split("\n")){
-            g2.drawString(line, x, y);
+
+        if(npc.dialogues[npc.dialogueSet][npc.dialogueIndex] != null)
+        {
+            //currentDialogue = npc.dialogues[npc.dialogueSet][npc.dialogueIndex];//For display text once, enable this and disable letter by letter.(Letter by letter: The if statement below there)
+
+            char characters[] = npc.dialogues[npc.dialogueSet][npc.dialogueIndex].toCharArray();
+
+            if(charIndex < characters.length)
+            {
+                gp.playSE(17);//Speak sound
+                String s = String.valueOf(characters[charIndex]);
+                combinedText = combinedText + s; //every loop add one character to combinedText
+                currentDialogue = combinedText;
+
+                charIndex++;
+            }
+            if(gp.keyH.enterPressed == true)
+            {
+                charIndex = 0;
+                combinedText = "";
+                if(gp.gameState == gp.dialogueState || gp.gameState == gp.cutsceneState)
+                {
+                    npc.dialogueIndex++;
+                    gp.keyH.enterPressed = false;
+                }
+            }
+        }
+        else //If no text is in the array
+        {
+            npc.dialogueIndex = 0;
+            if(gp.gameState == gp.dialogueState)
+            {
+                gp.gameState = gp.playState;
+            }
+            if(gp.gameState == gp.cutsceneState)
+            {
+                gp.csManager.scenePhase++;
+            }
+        }
+
+
+        for(String line : currentDialogue.split("\n"))   // splits dialogue until "\n" as a line
+        {
+            g2.drawString(line,x,y);
             y += 40;
         }
 
@@ -370,16 +431,16 @@ public class UI {
             frameY = gp.tileSize;
             frameWidth = gp.tileSize * 6;
             frameHeight = gp.tileSize * 5;
-            slotCol=playerslotCol;
-            slotRow=playerslotRow;
+            slotCol=playerSlotCol;
+            slotRow=playerSlotRow;
         }
         else {
             frameX = gp.tileSize*2;
             frameY = gp.tileSize;
             frameWidth = gp.tileSize * 6;
             frameHeight = gp.tileSize * 5;
-            slotCol=npcslotCol;
-            slotRow=npcslotRow;
+            slotCol=npcSlotCol;
+            slotRow=npcSlotRow;
 
         }
         // FRAME
@@ -794,7 +855,7 @@ public class UI {
         g2.drawString("Xu cua ban: "+gp.player.coin, x+24, y+60);
 
         //DRAW PRICE
-        int itemIndex=getItemIndexOnSlot(npcslotCol,npcslotRow);
+        int itemIndex=getItemIndexOnSlot(npcSlotCol,npcSlotRow);
         if(itemIndex<npc.inventory.size()) {
             x = (int) (gp.tileSize * 5.5);
             y = (int) (gp.tileSize * 5.5);
@@ -849,7 +910,7 @@ public class UI {
         g2.drawString("Xu cua ban: "+gp.player.coin, x+24, y+60);
 
         //DRAW PRICE
-        int itemIndex=getItemIndexOnSlot(playerslotCol,playerslotRow);
+        int itemIndex=getItemIndexOnSlot(playerSlotCol,playerSlotRow);
         if(itemIndex<gp.player.inventory.size()) {
             x = (int) (gp.tileSize * 15.5);
             y = (int) (gp.tileSize * 5.5);
@@ -884,26 +945,31 @@ public class UI {
         }
     }
     }
-   public  void drawSleepScreen(){
+    public void drawSleepScreen()
+    {
         counter++;
-       if (counter < 120) {
-           gp.eManager.lighting.filterAlpha += 0.01f;
-           if (gp.eManager.lighting.filterAlpha > 1f) {
-               gp.eManager.lighting.filterAlpha = 1f;
-           }
-       }
-               if (counter >= 120) {
-                       gp.eManager.lighting.filterAlpha -= 0.01f;
-               if (gp.eManager.lighting.filterAlpha <= 0f) {
-                   gp.eManager.lighting.filterAlpha = 0f;
-                   counter = 0;
-                   gp.eManager.lighting.dayState = gp.eManager.lighting.day;
-                   gp.eManager.lighting.dayCounter = 0;
-                   gp.gameState = gp.playState;
-                   gp.player.getPlayerImage();
-                    }
-               }
-   }
+        if(counter < 120)
+        {
+            gp.eManager.lighting.filterAlpha += 0.01f;
+            if(gp.eManager.lighting.filterAlpha > 1f)
+            {
+                gp.eManager.lighting.filterAlpha = 1f;
+            }
+        }
+        if(counter >= 120)
+        {
+            gp.eManager.lighting.filterAlpha -= 0.01f;
+            if(gp.eManager.lighting.filterAlpha <= 0f)
+            {
+                gp.eManager.lighting.filterAlpha = 0f;
+                counter = 0;
+                gp.eManager.lighting.dayState = gp.eManager.lighting.day;
+                gp.eManager.lighting.dayCounter = 0;
+                gp.gameState = gp.playState;
+                gp.player.getImage();
+            }
+        }
+    }
 
     public int getItemIndexOnSlot(int slotCol, int slotRow){
         int itemIndex = slotCol + (slotRow* 5);

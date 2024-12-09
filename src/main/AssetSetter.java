@@ -43,10 +43,7 @@ public class AssetSetter {
         gp.obj[mapNum][i].worldX = gp.tileSize*35;
         gp.obj[mapNum][i].worldY = gp.tileSize*21;
         i++;
-        gp.obj[mapNum][i] = new OBJ_Potion_Red(gp);
-        gp.obj[mapNum][i].worldX = gp.tileSize*22;
-        gp.obj[mapNum][i].worldY = gp.tileSize*27;
-        i++;
+
         gp.obj[mapNum][i] = new OBJ_Heart(gp);
         gp.obj[mapNum][i].worldX = gp.tileSize*22;
         gp.obj[mapNum][i].worldY = gp.tileSize*29;
@@ -63,22 +60,8 @@ public class AssetSetter {
         gp.obj[mapNum][i].worldX = gp.tileSize*12;
         gp.obj[mapNum][i].worldY = gp.tileSize*12;
         i++;
-        gp.obj[mapNum][i] = new OBJ_Chest(gp, new OBJ_Key(gp));
-        gp.obj[mapNum][i].worldX = gp.tileSize*33;
-        gp.obj[mapNum][i].worldY = gp.tileSize*7;
-        i++;
-        gp.obj[mapNum][i] = new OBJ_Potion_Red(gp);
-        gp.obj[mapNum][i].worldX = gp.tileSize*21;
-        gp.obj[mapNum][i].worldY = gp.tileSize*20;
-        i++;
-        gp.obj[mapNum][i] = new OBJ_Potion_Red(gp);
-        gp.obj[mapNum][i].worldX = gp.tileSize*19;
-        gp.obj[mapNum][i].worldY = gp.tileSize*20;
-        i++;
-        gp.obj[mapNum][i] = new OBJ_Potion_Red(gp);
-        gp.obj[mapNum][i].worldX = gp.tileSize*17;
-        gp.obj[mapNum][i].worldY = gp.tileSize*21;
-        i++;
+
+
     }
 
     public void setNPC(){
