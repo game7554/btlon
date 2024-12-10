@@ -440,7 +440,7 @@ public class Player extends Entity{
                 gp.gameState = gp.gameOverState;
                 gp.ui.commandNum =- 1; //for if you die while pressing enter
                 gp.stopMusic();
-                gp.playSE(12);
+                gp.playSE(1);
             }
         }
     }
