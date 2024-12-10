@@ -719,8 +719,6 @@ public class Entity {
     public void draw(Graphics2D g2)
     {
         BufferedImage image= null;
-
-
         if(inCamera() == true)
         {
             int tempScreenX = getScreenX();

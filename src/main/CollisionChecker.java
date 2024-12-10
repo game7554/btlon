@@ -24,7 +24,7 @@ public class CollisionChecker {
 
         int tileNum1, tileNum2;
 
-// su dung di chuyen tam thoi khi bi an bong
+        // su dung di chuyen tam thoi khi bi an bong
         String direction= entity.direction;
         if(entity.knockBack == true ){
             direction = entity.knockBackDirection;
@@ -69,6 +69,11 @@ public class CollisionChecker {
 
     public int checkObject(Entity entity, boolean player) {
         int index = 999;
+        String direction= entity.direction;
+        if(entity.knockBack == true ){
+            direction = entity.knockBackDirection;
+        }
+
         for (int i = 0; i < gp.obj[1].length; i++) {
             if (gp.obj[gp.currentMap][i] != null) {
                 // Get entity's solid area position
@@ -79,7 +84,7 @@ public class CollisionChecker {
                 gp.obj[gp.currentMap][i].solidArea.x = gp.obj[gp.currentMap][i].worldX + gp.obj[gp.currentMap][i].solidArea.x;
                 gp.obj[gp.currentMap][i].solidArea.y = gp.obj[gp.currentMap][i].worldY + gp.obj[gp.currentMap][i].solidArea.y;
 
-                switch (entity.direction) {
+                switch (direction) {
                     case "up": entity.solidArea.y -= entity.speed; break;
                     case "down": entity.solidArea.y += entity.speed; break;
                     case "left": entity.solidArea.x -= entity.speed; break;
