@@ -18,7 +18,7 @@ public class OBJ_Key extends Entity {
         name = objName;
         down1 = setup("/objects/key",gp.tileSize,gp.tileSize);
         description = "[" + name + "]\nIt opens a door.";
-        price = 350;
+        price = 10;
         stackable = true;
 
         setDialogue();

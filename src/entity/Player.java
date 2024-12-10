@@ -68,7 +68,7 @@ public class Player extends Entity{
         dexterity = 1;          // The more dexterity he has, the less damage he receives.
         exp = 0;
         nextLevelExp = 4;
-        coin = 40;
+        coin = 0;
         invincible = false;
         currentWeapon = new OBJ_Sword_Normal(gp);
         currentShield = new OBJ_Shield_Wood(gp);

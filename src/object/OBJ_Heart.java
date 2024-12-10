@@ -18,7 +18,7 @@ public class OBJ_Heart extends Entity {
         image = setup("/objects/heart_full",gp.tileSize,gp.tileSize);
         image2 = setup("/objects/heart_half",gp.tileSize,gp.tileSize);
         image3 = setup("/objects/heart_blank",gp.tileSize,gp.tileSize);
-        price = 175;
+        price = 5;
     }
     public boolean use(Entity entity)
     {

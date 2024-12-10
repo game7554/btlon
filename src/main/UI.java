@@ -47,22 +47,6 @@ public class UI {
     public UI(GamePanel gp)
     {
         this.gp = gp;
-        try
-        {
-           // arial_40 = new Font("Arial", Font.PLAIN, 40);
-           // arial_80B = new Font("Arial", Font.BOLD, 80);
-            InputStream is = getClass().getResourceAsStream("/font/x12y16pxMaruMonica.ttf");
-            maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);
-            is = getClass().getResourceAsStream("/font/Purisa Bold.ttf");
-            purisaB = Font.createFont(Font.TRUETYPE_FONT, is);
-        }
-        catch (FontFormatException e) {
-            e.printStackTrace();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-
         //CREATE HUD OBJECT
         Entity heart = new OBJ_Heart(gp);
         heart_full = heart.image;
@@ -217,7 +201,7 @@ public class UI {
         if(titleScreenState==0)
         {
         //TITLE SCREEN
-        g2.setColor(Color.yellow);
+        g2.setColor(Color.black);
         g2.fillRect(0,0,gp.screenWidth,gp.screenHeight);
         //LOGO HUST
         //g2.drawImage(gp.player.logo, 0, 0, gp.tileSize*12,gp.tileSize*7,null);
@@ -226,7 +210,7 @@ public class UI {
         String text= "7554";
         int x= getXforCenteredText(text);
         int y= gp.tileSize*2;
-        g2.setColor(Color.red);
+        g2.setColor(Color.white);
         g2.drawString(text,x,y);
         //IMAGE
         x=gp.screenWidth/2-(gp.tileSize*2)/2;
@@ -244,21 +228,16 @@ public class UI {
         y+=gp.tileSize;
         g2.drawString(text,x,y);
         if (commandNum==1) g2.drawString(">",x-gp.tileSize,y);
-        text="Hướng dẫn";
-        x=getXforCenteredText(text);
-        y+=gp.tileSize;
-        g2.drawString(text,x,y);
-        if (commandNum==2) g2.drawString(">",x-gp.tileSize,y);
         text="Thoát";
         x=getXforCenteredText(text);
         y+=gp.tileSize;
         g2.drawString(text,x,y);
-        if (commandNum==3) g2.drawString(">",x-gp.tileSize,y);
+        if (commandNum==2) g2.drawString(">",x-gp.tileSize,y);
         }
         else
         {
             //TITLE SCREEN
-            g2.setColor(Color.yellow);
+            g2.setColor(Color.black);
             g2.fillRect(0,0,gp.screenWidth,gp.screenHeight);
             //LOGO HUST
             //g2.drawImage(gp.player.logo, 0, 0, gp.tileSize*12,gp.tileSize*7,null);
@@ -267,7 +246,7 @@ public class UI {
             String text= "7554";
             int x= getXforCenteredText(text);
             int y= gp.tileSize*2;
-            g2.setColor(Color.red);
+            g2.setColor(Color.white);
             g2.drawString(text,x,y);
             //IMAGE
             x=gp.screenWidth/2-(gp.tileSize*2)/2;

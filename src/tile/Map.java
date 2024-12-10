@@ -68,9 +68,9 @@ public class Map extends TileManager{
         g2.drawImage(gp.player.down1,playerX,playerY,playerSize,playerSize,null);
 
         //Hint
-        g2.setFont(gp.ui.maruMonica.deriveFont(32f));
-        g2.setColor(Color.white);
-        g2.drawString("Press M to close", 750, 550);
+        //g2.setFont(gp.ui.maruMonica.deriveFont(32f));
+        //g2.setColor(Color.white);
+        //g2.drawString("Press M to close", 750, 550);
     }
     public void drawMiniMap(Graphics2D g2)
     {

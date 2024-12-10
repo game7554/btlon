@@ -23,7 +23,7 @@ public class OBJ_Fireball extends Projectile {
         knockBackPower = 5;
         useCost = 1; //spend 1 mana
         alive = false;
-        price = 75;
+        price = 5;
         getImage();
 
     }

@@ -87,7 +87,7 @@ public class Entity {
 
     //ITEM ATTRIBUTES
     public ArrayList<Entity> inventory = new ArrayList<>();
-    public final int maxInventorySize = 20;
+    public final int maxInventorySize = 30;
     public int attackValue;
     public int defenseValue;
     public String description = "";
