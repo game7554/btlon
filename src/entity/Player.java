@@ -80,7 +80,7 @@ public class Player extends Entity{
 
         getImage();
         getAttackImage();
-//        getGuardImage();
+        getGuardImage();
         setItems();
         //setDialogue();
     }
@@ -219,13 +219,13 @@ public class Player extends Entity{
         }
 
     }
-  /*  public void getGuardImage()
+    public void getGuardImage()
     {
         guardUp = setup("/player/boy_guard_up",gp.tileSize,gp.tileSize);
         guardDown = setup("/player/boy_guard_down",gp.tileSize,gp.tileSize);
         guardLeft = setup("/player/boy_guard_left",gp.tileSize,gp.tileSize);
         guardRight = setup("/player/boy_guard_right",gp.tileSize,gp.tileSize);
-    }*/
+    }
     public void update() // Runs 60 times every seconds.
     {
         if(knockBack == true)

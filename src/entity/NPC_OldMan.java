@@ -2,7 +2,7 @@ package entity;
 
 import main.GamePanel;
 
-import java.awt.Rectangle;
+import java.awt.*;
 import java.util.Random;
 
 

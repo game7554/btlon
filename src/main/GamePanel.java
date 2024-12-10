@@ -26,17 +26,20 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenWidth = tileSize * maxScreenCol; // 960 pixels
     public final int screenHeight = tileSize * maxScreenRow;// 576 pixels
 
-    // WORLD SETTINGS
-    public final int maxWorldCol = 50;
-    public final int maxWorldRow=50;
-    public final int maxMap=20;
-    public int currentMap=0;
-    // FOR FULL SCREEN
+
+    //WORLD SETTINGS
+    public int maxWorldCol;
+    public int maxWorldRow;
+    public final int maxMap = 10;
+    public int currentMap = 0;
+
+    //FOR FULLSCREEN
     int screenWidth2 = screenWidth;
     int screenHeight2 = screenHeight;
     BufferedImage tempScreen;
     Graphics2D g2;
     public boolean fullScreenOn = false;
+
 
     // FPS
     int FPS = 60;
@@ -111,7 +114,7 @@ public class GamePanel extends JPanel implements Runnable {
         playMusic(0);
         stopMusic();
         gameState = titleState;
-
+        currentArea = outside;
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D)tempScreen.getGraphics();
 

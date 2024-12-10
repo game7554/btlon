@@ -12,8 +12,9 @@ public class IT_Trunk extends InteractiveTile{
         this.worldX = gp.tileSize * col;
         this.worldY = gp.tileSize * row;
 
-        down1 = setup("/tiles_interactive/trunk", gp.tileSize, gp.tileSize);
+        down1 = setup("/tiles_interactive/trunk",gp.tileSize,gp.tileSize);
 
+        // NO COLLISION
         solidArea.x = 0;
         solidArea.y = 0;
         solidArea.width = 0;

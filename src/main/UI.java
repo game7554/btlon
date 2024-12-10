@@ -520,9 +520,11 @@ public class UI {
                 drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
                 for (String line : entity.inventory.get(itemIndex).description.split("\n")){
                     g2.drawString(line, textX, textY);
-                    textY += 32;
+                        textY += 32;
 
                 }
+
+
             }
         }
 
@@ -788,7 +790,7 @@ public class UI {
             gp.player.worldY=gp.tileSize*gp.eHandler.tempRow;
             gp.eHandler.previousEventX=gp.player.worldX;
             gp.eHandler.previousEventY=gp.player.worldY;
-
+            gp.changeArea();
 
         }
     }
@@ -802,6 +804,8 @@ public class UI {
         gp.keyH.enterPressed=false;
     }
     public void trade_select(){
+
+        npc.dialogueSet = 0;
         drawDialogueScreen();
 
         //DRAW WINDOW
@@ -831,8 +835,7 @@ public class UI {
             g2.drawString(">",x-24,y);
             if(gp.keyH.enterPressed==true)
             {commandNum=0;
-                gp.gameState=gp.dialogueState;
-                currentDialogue="Tam biet, hen gap lai";
+                npc.startDialogue(npc,1);
         }}
     }
     public void trade_buy(){
@@ -874,9 +877,8 @@ public class UI {
             if (gp.keyH.enterPressed == true) {
                 if (npc.inventory.get(itemIndex).price > gp.player.coin) {
                     subState = 0;
-                    gp.gameState = gp.dialogueState;
-                    currentDialogue = "Ban can nhieu xu hon";
-                    drawDialogueScreen();
+                    npc.startDialogue(npc,2);
+
                 }
                 else {
                     if(gp.player.canObtainItem(npc.inventory.get(itemIndex)) == true) {
@@ -884,8 +886,7 @@ public class UI {
                     }
                     else {
                         subState = 0;
-                        gp.gameState = gp.dialogueState;
-                        currentDialogue = "Ban khong the mang them";
+                        npc.startDialogue(npc,3);
                     }
                 }
             }
@@ -930,9 +931,9 @@ public class UI {
                if(gp.player.inventory.get(itemIndex)==gp.player.currentWeapon||
                        gp.player.inventory.get(itemIndex)==gp.player.currentShield){
                    commandNum=0;
-                   //subState=0;
-                   gp.gameState=gp.dialogueState;
-                   currentDialogue="Ban khong the ban do dang duoc trang bi";
+                   subState=0;
+                   npc.startDialogue(npc,4);
+
                }
                else {
                    if(gp.player.inventory.get(itemIndex).amount > 1) {
