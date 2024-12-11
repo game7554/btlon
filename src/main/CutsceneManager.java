@@ -29,15 +29,7 @@ public class CutsceneManager {
     public CutsceneManager(GamePanel gp)
     {
         this.gp = gp;
-        endCredit = "Developed by\n"
-                + "Berkayw"
-                + "\n\n\n\n\n\n\n\n\n\n\n"
-                + "Special Thanks\n\n"
-                + "Alperen Aksu\n"
-                + "Ryi Snow\n\n"
-                + "Check his tutorials from RyiSnow YouTube Channel!\n"
-                + "\n\n\n\n\n\n\n"
-                + "Thank you for playing!";
+        endCredit = "";
     }
     public void draw(Graphics2D g2)
     {
