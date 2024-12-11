@@ -254,7 +254,7 @@ public class UI {
             g2.drawImage(gp.player.down1, x, y, gp.tileSize*2,gp.tileSize*2,null);
             //MENU
             g2.setFont(g2.getFont().deriveFont(Font.ITALIC,48F));
-            text="Chon do kho";
+            text="Chọn độ khó";
             x=getXforCenteredText(text);
             y+=gp.tileSize*4;
             //g2.setColor(Color.white);
@@ -264,7 +264,7 @@ public class UI {
             y+=gp.tileSize*2;
             g2.drawString(text,x,y);
             if (commandNum==0) g2.drawString(">",x-gp.tileSize,y);
-            text="Binh thuong";
+            text="Bình thường";
             x=getXforCenteredText(text);
             y+=gp.tileSize;
             g2.drawString(text,x,y);
@@ -274,7 +274,7 @@ public class UI {
             y+=gp.tileSize;
             g2.drawString(text,x,y);
             if (commandNum==2) g2.drawString(">",x-gp.tileSize,y);
-            text="Tro lại";
+            text="Trở lại";
             x=getXforCenteredText(text);
             y+=gp.tileSize;
             g2.drawString(text,x,y);
@@ -284,7 +284,7 @@ public class UI {
     public void drawPauseScreen(){
 
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 80F));
-        String text = "PAUSED";
+        String text = "TẠM DÙNG";
         int x = getXforCenteredText(text);
         int y = gp.screenHeight/2;
 
@@ -355,7 +355,7 @@ public class UI {
         //CREAT A FRAME
         final int frameX = gp.tileSize*2;
         final  int frameY = gp.tileSize;
-        final  int frameWidth = gp.tileSize*5;
+        final  int frameWidth = gp.tileSize*8;
         final int frameHeight = gp.tileSize *10;
         drawSubWindow(frameX, frameY, frameWidth, frameHeight);
 
@@ -368,29 +368,29 @@ public class UI {
         final int lineHeight =35;
 
         //Names
-        g2.drawString("Level", textX, textY);
+        g2.drawString("Cấp độ", textX, textY);
         textY += lineHeight;
-        g2.drawString("Life", textX, textY);
+        g2.drawString("Sức sống", textX, textY);
         textY += lineHeight;
-        g2.drawString("Mana", textX, textY);
+        g2.drawString("Năng lượng", textX, textY);
         textY += lineHeight;
-        g2.drawString("Strength", textX, textY);
+        g2.drawString("Sức mạnh", textX, textY);
         textY += lineHeight;
-        g2.drawString("Dexterity", textX, textY);
+        g2.drawString("Sự khéo léo", textX, textY);
         textY += lineHeight;
-        g2.drawString("Attack", textX, textY);
+        g2.drawString("Tấn công", textX, textY);
         textY += lineHeight;
-        g2.drawString("Defense", textX, textY);
+        g2.drawString("Phòng thủ", textX, textY);
         textY += lineHeight;
-        g2.drawString("Exp", textX, textY);
+        g2.drawString("Kinh nghiệm", textX, textY);
         textY += lineHeight;
-        g2.drawString("Next Level", textX, textY);
+        g2.drawString("Cấp độ tiếp theo", textX, textY);
         textY += lineHeight;
-        g2.drawString("Coin", textX, textY);
+        g2.drawString("Xu", textX, textY);
         textY += lineHeight +10 ;
-        g2.drawString("Weapon", textX, textY);
+        g2.drawString("Vũ khí", textX, textY);
         textY += lineHeight +15;
-        g2.drawString("Shield", textX, textY);
+        g2.drawString("Khiên", textX, textY);
         textY += lineHeight;
 
         // VALUES
@@ -788,7 +788,7 @@ public class UI {
         }
 
         // YES
-        String text = "Yes";
+        String text = "Đồng ý";
         textX = getXforCenteredText(text);
         textY += gp.tileSize*3;
         g2.drawString(text, textX, textY);
@@ -802,7 +802,7 @@ public class UI {
         }
 
         // NO
-        text = "No";
+        text = "Không";
         textX = getXforCenteredText(text);
         textY += gp.tileSize;
         g2.drawString(text, textX, textY);
@@ -861,13 +861,13 @@ public class UI {
             if(gp.keyH.enterPressed==true) subState=1;
         }
         y+=gp.tileSize;
-        g2.drawString("Ban",x,y);
+        g2.drawString("Bán",x,y);
         if(commandNum==1) {
             g2.drawString(">",x-24,y);
             if(gp.keyH.enterPressed==true) subState=2;
         }
         y+=gp.tileSize;
-        g2.drawString("Thoat",x,y);
+        g2.drawString("Thoát",x,y);
         if(commandNum==2) {
             g2.drawString(">",x-24,y);
             if(gp.keyH.enterPressed==true)
@@ -885,7 +885,7 @@ public class UI {
         int width= gp.tileSize*6;
         int height= gp.tileSize*2;
         drawSubWindow(x,y,width,height);
-        g2.drawString("[ESC] Tro lai", x+24, y+60);
+        g2.drawString("[ESC] Trở lại", x+24, y+60);
 
         //DRAW COIN
          x= gp.tileSize*12;
@@ -893,7 +893,7 @@ public class UI {
          width= gp.tileSize*6;
          height= gp.tileSize*2;
         drawSubWindow(x,y,width,height);
-        g2.drawString("Xu cua ban: "+gp.player.coin, x+24, y+60);
+        g2.drawString("Xu của bạn: "+gp.player.coin, x+24, y+60);
 
         //DRAW PRICE
         int itemIndex=getItemIndexOnSlot(npcSlotCol,npcSlotRow);
@@ -938,7 +938,7 @@ public class UI {
         int width= gp.tileSize*6;
         int height= gp.tileSize*2;
         drawSubWindow(x,y,width,height);
-        g2.drawString("[ESC] Tro lai", x+24, y+60);
+        g2.drawString("[ESC] Trở lại", x+24, y+60);
 
         //DRAW COIN
         x= gp.tileSize*12;
@@ -946,7 +946,7 @@ public class UI {
         width= gp.tileSize*6;
         height= gp.tileSize*2;
         drawSubWindow(x,y,width,height);
-        g2.drawString("Xu cua ban: "+gp.player.coin, x+24, y+60);
+        g2.drawString("Xu của bạn: "+gp.player.coin, x+24, y+60);
 
         //DRAW PRICE
         int itemIndex=getItemIndexOnSlot(playerSlotCol,playerSlotRow);
