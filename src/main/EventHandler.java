@@ -74,12 +74,12 @@ public class EventHandler {
             if(hit(0,23,12, "up") == true) {healingPool(gp.dialogueState);}
             else if(hit(0,10,9, "any") == true) {healingPool(gp.dialogueState);}
             else if(hit(0,27,16, "right") == true) {damagePit(gp.dialogueState);}
-            else if(hit(0,10,39, "any") == true) {teleport(1,12,13,gp.indoor);} //to merchant's house
-            else if(hit(1,12,13, "any") == true) {teleport(0,10,39,gp.outside);} //to outside
+            else if(hit(0,29,4, "any") == true) {teleport(1,12,13,gp.indoor);} //to merchant's house
+            else if(hit(1,12,13, "any") == true) {teleport(0,28,4,gp.outside);} //to outside
             else if(hit(1,12,9, "up") == true) {speak(gp.npc[1][0]);} //merchant
 
-            else if(hit(0,12,9, "any") == true) {teleport(2,9,41,gp.dungeon);} //to the dungeon
-            else if(hit(2,9,41, "any") == true) {teleport(0,12,9,gp.outside);} //to outside
+            else if(hit(0,15,38, "any") == true) {teleport(2,9,41,gp.dungeon);} //to the dungeon
+            else if(hit(2,9,41, "any") == true) {teleport(0,14,38,gp.outside);} //to outside
             else if(hit(2,8,7, "any") == true) {teleport(3,26,41,gp.dungeon);} //to B2
             else if(hit(3,26,41, "any") == true) {teleport(2,8,7,gp.dungeon);} //to B1
             else if(hit(3,25,27, "any") == true) {skeletonLord();} //BOSS

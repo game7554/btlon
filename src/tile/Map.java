@@ -91,7 +91,7 @@ public class Map extends TileManager{
             int playerY = (int)(y + gp.player.worldY/scale);
             int playerSize = (int)(gp.tileSize/3); //(int)(gp.tileSize/scale);
             g2.drawImage(gp.player.down1,playerX-6,playerY-6,playerSize,playerSize,null); //playerX,playerY
-
+            //g2.drawImage();
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f)); //reset alpha
         }
     }
