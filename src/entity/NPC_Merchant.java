@@ -38,11 +38,11 @@ public class NPC_Merchant extends Entity{
     }
     public void setDialogue()
     {
-        dialogues[0][0] = "He he ha, so you found me.\nI have some good stuff. \nDo you want to trade?";
-        dialogues[1][0] = "Come again, hehe!";
-        dialogues[2][0] = "You need more coin to buy that!";
-        dialogues[3][0] = "You can not carry any more!";
-        dialogues[4][0] = "You can not sell an equipped item!";
+        dialogues[0][0] = "Hehe haha.\nTa có một vài món đồ tốt. \nCậu có muốn trao đổi không?";
+        dialogues[1][0] = "Hẹn gặp lại, hehe!";
+        dialogues[2][0] = "Bạn cần nhiều xu hơn để mua nó!";
+        dialogues[3][0] = "Bạn không thể mang thêm đồ nữa!";
+        dialogues[4][0] = "Bạn không thể bán món đồ đã được trang bị!";
     }
     public void setItems()
     {

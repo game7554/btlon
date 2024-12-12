@@ -53,10 +53,10 @@ public class EventHandler {
     }
     public void setDialogue()
     {
-        eventMaster.dialogues[0][0] = "You fall into a pit!";
+        eventMaster.dialogues[0][0] = "Bạn ngã vào 1 cái hố bẫy!";
 
-        eventMaster.dialogues[1][0] = "You drink the water.\nYour life and mana has been recovered.\n"+ "(The progress has been saved)";
-        eventMaster.dialogues[1][1] = "Damn, this is good water.";
+        eventMaster.dialogues[1][0] = "Bạn vừa uống nước. \nSức sống và năng lượng của bạn được hồi lại\n"+ "(Tiến độ đã được lưu)";
+        eventMaster.dialogues[1][1] = "Nước ngon phết đấy :3";
     }
     public void checkEvent()
     {
@@ -71,8 +71,8 @@ public class EventHandler {
 
         if(canTouchEvent == true)
         {
-            if(hit(0,23,12, "up") == true) {healingPool(gp.dialogueState);}
-            else if(hit(0,10,9, "any") == true) {healingPool(gp.dialogueState);}
+            if(hit(0,23,7, "down") == true) {healingPool(gp.dialogueState);}
+            else if(hit(0,10,7, "any") == true) {healingPool(gp.dialogueState);}
             else if(hit(0,27,16, "right") == true) {damagePit(gp.dialogueState);}
             else if(hit(0,29,4, "any") == true) {teleport(1,12,13,gp.indoor);} //to merchant's house
             else if(hit(1,12,13, "any") == true) {teleport(0,28,4,gp.outside);} //to outside
