@@ -115,7 +115,7 @@ public class EventHandler {
         tempRow = row;
         //DRAW TRANSITION IN UI
         canTouchEvent = false;
-        gp.playSE(13);
+        gp.playSE(1);
     }
     public void damagePit(int gameState)
     {
