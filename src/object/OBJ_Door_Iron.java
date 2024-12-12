@@ -6,7 +6,7 @@ import main.GamePanel;
 public class OBJ_Door_Iron extends Entity {
 
     GamePanel gp;
-    public static final String objName = "Iron Door";
+    public static final String objName = "Cửa sắt";
 
     public OBJ_Door_Iron(GamePanel gp)
     {
@@ -28,7 +28,7 @@ public class OBJ_Door_Iron extends Entity {
     }
     public void setDialogue()
     {
-        dialogues[0][0] = "It won't budge.";
+        dialogues[0][0] = "Nó sẽ không nhúc nhích.";
     }
     public void interact() {
         startDialogue(this,0);

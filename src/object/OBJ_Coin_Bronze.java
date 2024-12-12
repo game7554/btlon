@@ -8,7 +8,7 @@ import java.awt.*;
 public class OBJ_Coin_Bronze extends Entity {
 
     GamePanel gp;
-    public static final String objName = "Bronze Coin";
+    public static final String objName = "Xu đồng";
     public OBJ_Coin_Bronze(GamePanel gp) {
         super(gp);
         this.gp = gp;
@@ -22,7 +22,7 @@ public class OBJ_Coin_Bronze extends Entity {
     public boolean use(Entity entity)
     {
         gp.playSE(1);
-        gp.ui.addMessage("Coin +" + value);
+        gp.ui.addMessage("Xu +" + value);
         entity.coin += value;
         return true;
     }

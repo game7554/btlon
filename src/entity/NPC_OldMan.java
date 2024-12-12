@@ -41,9 +41,9 @@ public class NPC_OldMan extends Entity{
     }
     public void setDialogue()
     {
-        dialogues[0][0] = "Chào chàng trai.";
-        dialogues[0][1] = "Cậu đến hòn đảo này để tìm kho báu sao?";
-        dialogues[0][2] = "Ta từng là một phù thủy giỏi nhưng giờ thì... \nTa hơi già để tham gia chuyến phiêu lưu.";
+        dialogues[0][0] = "Chào chàng sinh viên bách khoa.";
+        dialogues[0][1] = "Cậu đến hòn đảo này để tìm 'BÍ KÍP A+ OOP' sao?";
+        dialogues[0][2] = "Ta từng là một sinh viên xuất sắc nhưng giờ thì... \nTa không đủ sức để tìm cùng cậu.";
         dialogues[0][4] = "Vậy nên chúc cậu may mắn.";
         dialogues[0][3] = "Cậu có thể gặp lại ta khi gặp rắc rối.";
 

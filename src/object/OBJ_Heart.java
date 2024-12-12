@@ -5,7 +5,7 @@ import main.GamePanel;
 
 public class OBJ_Heart extends Entity {
     GamePanel gp;
-    public static final String objName = "Heart";
+    public static final String objName = "Máu";
 
     public OBJ_Heart(GamePanel gp)
     {
@@ -23,7 +23,7 @@ public class OBJ_Heart extends Entity {
     public boolean use(Entity entity)
     {
         gp.playSE(2);
-        gp.ui.addMessage("Life +" + value);
+        gp.ui.addMessage("Sức sống +" + value);
         entity.life += value;
         return true;
     }

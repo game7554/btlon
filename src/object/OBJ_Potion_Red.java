@@ -6,7 +6,7 @@ import main.GamePanel;
 public class OBJ_Potion_Red extends Entity {
 
     GamePanel gp;
-    public static final String objName = "Red Potion";
+    public static final String objName = "Thần dược đỏ";
 
     public OBJ_Potion_Red(GamePanel gp) {
         super(gp);
@@ -17,7 +17,7 @@ public class OBJ_Potion_Red extends Entity {
         name = objName;
         value = 5;
         down1 = setup("/objects/potion_red", gp.tileSize, gp.tileSize);
-        description = "[" + name + "]\nHeals your life by " + value + ".";
+        description = "[" + name + "]\nHồi sức sống với \n" + value + " máu.";
         price = 10;
         stackable = true;
 
@@ -25,7 +25,7 @@ public class OBJ_Potion_Red extends Entity {
     }
     public void setDialogue()
     {
-        dialogues[0][0] = "You drink the " + name + "!\n" + "Your life has been recovered by " + value + ".";
+        dialogues[0][0] = "Bạn uống " + name + "!\n" + "Sức sống của bạn được hồi với " + value + " máu.";
     }
     public boolean use(Entity entity)
     {

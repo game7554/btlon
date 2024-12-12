@@ -4,7 +4,7 @@ import entity.Entity;
 import main.GamePanel;
 
 public class OBJ_Boots extends Entity {
-    public static final String objName = "Boots";
+    public static final String objName = "Giày";
     public OBJ_Boots(GamePanel gp)
     {
         super(gp);

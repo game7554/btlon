@@ -9,7 +9,7 @@ import java.awt.*;
 public class OBJ_Fireball extends Projectile {
 
     GamePanel gp;
-    public static final String objName = "Fireball";
+    public static final String objName = "Cầu lửa";
 
     public OBJ_Fireball(GamePanel gp) {
         super(gp);

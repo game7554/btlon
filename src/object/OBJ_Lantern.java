@@ -5,7 +5,7 @@ import main.GamePanel;
 
 public class OBJ_Lantern extends Entity {
 
-    public static final String objName = "Lantern";
+    public static final String objName = "Đèn lồng";
 
     public OBJ_Lantern(GamePanel gp)
     {
@@ -14,7 +14,7 @@ public class OBJ_Lantern extends Entity {
         type = type_light;
         name = objName;
         down1 = setup("/objects/lantern",gp.tileSize,gp.tileSize);
-        description = "[Lantern]\nIlluminates your \nsurroundings.";
+        description = "[Đèn lồng]\nSoi sáng \nxung quanh.";
         price = 200;
         lightRadius = 350;
     }
